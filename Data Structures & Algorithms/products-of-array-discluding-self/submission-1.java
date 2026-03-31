@@ -1,0 +1,27 @@
+class Solution {
+    public int[] productExceptSelf(int[] nums) {
+        int[] res = new int[nums.length];
+        int[] pref = new int[nums.length];
+        int[] suff = new int[nums.length];
+
+        //storing 1 as 1st el's left as there is nothing in left
+        pref[0] = 1;
+
+        //storing 1 as last el's right as there is nothing in right
+        suff[nums.length-1] = 1;
+        for(int i = 1; i<nums.length ; i++){
+            //before idx->pre so, idx-1
+            pref[i] = nums[i-1] * pref[i-1];
+        }
+
+        for(int i = nums.length-2 ;  i>=0; i--){
+            //after idx->post so, idx+1
+            suff[i]= nums[i+1] * suff[i+1];
+        }
+
+        for(int i = 0; i<nums.length; i++){
+            res[i] = pref[i] * suff[i];
+        }
+        return res;
+    }
+}  
